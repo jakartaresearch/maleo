@@ -1,5 +1,6 @@
 import os
 import re
+import string
 import pandas as pd
 import unicodedata
 from bs4 import BeautifulSoup
@@ -19,11 +20,11 @@ class Wizard:
     
     """
     def __init__(self):
-        
+        self.tes = 'tes'
         
     def run(self, text):
         series = self.convert_dtype(text)
-        series = self.remove_link(series)
+        series = self.remove(series)
         series = self.remove_html(series)
         series = self.remove_non_ascii(series)
         return series
@@ -35,9 +36,23 @@ class Wizard:
             print('Data Type not supported')
         return text
         
-    def remove_link(self, series):
+    def remove(self, series):
+        # remove link
         series = series.replace(regex=r'http\S+', value='')
         series = series.replace(regex=r'pic.twitter.com\S+', value='')
+        # encode email link to 'EMAIL'
+        series = series.replace(regex=r'[\w\.-]+@[\w\.-]+\.\w+', value='EMAIL')
+        # remove punctuation
+        punctuation_pattern = r"[\s{}]".format(re.escape(string.punctuation))
+        series = series.replace(regex=punctuation_pattern, value=' ')
+        # remove single char
+        series = series.replace(regex=r'\s[^uUgGbB0-9]\s', value=' ')
+        # remove consecutive repeating char
+        series = series.replace(regex=r'([^gG])\1+', value=r'\1')
+        # remove multiple whitespaces
+        series = series.replace(regex=r'\s\s+', value=' ')
+        
+        series = series.str.strip()
         return series
     
     def remove_html(self, series):
