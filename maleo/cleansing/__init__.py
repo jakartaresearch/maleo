@@ -1,4 +1,4 @@
-from maleo.cleansing.wizard import Wizard
+from maleo.cleansing.Wizard import Wizard
 
 __all__ = [
     'Wizard'
