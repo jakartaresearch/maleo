@@ -1,3 +1,4 @@
 pandas
 emoji
 nltk
+number-parser
