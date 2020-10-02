@@ -124,12 +124,5 @@ def gather_dates(text, date_format='dd/mm/yyyy'):
     return re.findall(regex_list[date_format], text)
 
 
-def encode_dates(text):
-    ddmmyyyy = r'\b(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/([0-9]{4})\b'
-    yyyymmdd = r'\b([0-9]{4})/(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])\b'
-    date = re.compile('|'.join([ddmmyyyy, yyyymmdd]))
-    return re.sub(date, '<DATE>', text)
-
-
 def count_dates(text):
     return len(gather_dates(text))

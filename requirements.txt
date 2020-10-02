@@ -2,3 +2,5 @@ pandas
 emoji
 nltk
 number-parser
+price-parser
+flashtext
