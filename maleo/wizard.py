@@ -3,7 +3,7 @@ import pandas as pd
 from maleo.scanner.scanner import scan
 from maleo.cleansing.cleansing import remove
 from maleo.preprocessing.preprocessing import encode_email, encode_date, encode_phone_num
-from maleo.preprocessing.preprocessing import convert_slang_formal, word2number, extract_price
+from maleo.preprocessing.preprocessing import convert_slang_formal, word2number, extract_price, extract_hashtag
 
 
 class Wizard:
@@ -37,6 +37,11 @@ class Wizard:
         df = extract_price(text)
         return df
     
+    
+    def hashtag_parser(self, text):
+        df = extract_hashtag(text)
+        return df
+        
     
     def convert_dtype(self, text):
         if type(text) == list or type(text) == str:

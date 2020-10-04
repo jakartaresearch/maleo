@@ -10,6 +10,7 @@ from maleo.stopword_remover.RemoverFactory import RemoverFactory
 
 def remove(series):
     #series = remove_html(series)
+    series.drop_duplicates(keep='first', inplace=True)
     series = remove_link(series)
     series = remove_punctuation(series)
     series = remove_char(series)
