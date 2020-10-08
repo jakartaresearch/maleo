@@ -1,37 +1,35 @@
 import re
-import pandas as pd
 import json
+import pandas as pd
 from number_parser import parse
 from price_parser import Price
 from flashtext import KeywordProcessor
 
 
 def word2number(text, lang):
-    if lang == 'eng':
-        return parse(text)
-    else:
-        return text
+    return parse(text) if lang == 'eng' else text
 
 
 def extract_hashtag(series):
     list_text, list_hashtag = [], []
-    for index, value in series.items():
-        get_hashtag = list(set(part[1:] for part in value.split() if part.startswith('#')))
+    for _, value in series.items():
+        get_hashtag = list(
+            set(part[1:] for part in value.split() if part.startswith('#')))
         if get_hashtag:
             list_text.append(value)
             list_hashtag.append(get_hashtag)
-            
+
     return pd.DataFrame({'Text': list_text, 'Hashtag': list_hashtag})
 
 
 def extract_price(series):
     list_text, list_price = [], []
-    for index, value in series.items():
+    for _, value in series.items():
         price = Price.fromstring(value)
         if price.currency in ['Rp', 'RP', '$']:
             list_text.append(value)
             list_price.append(price)
-            
+
     return pd.DataFrame({'Text': list_text, 'Price': list_price})
 
 
@@ -55,14 +53,14 @@ def encode_phone_num(series):
 
 
 def read_json(json_path):
-    with open(json_path, 'r') as fp:
-        data_dict = json.load(fp)
+    with open(json_path, 'r') as file:
+        data_dict = json.load(file)
     return data_dict
 
 
 def convert_slang_formal(series):
     dict_alay = read_json('maleo/preprocessing/slang_dict.json')
-    
+
     keyword_proc = KeywordProcessor()
     for word in dict_alay.items():
         keyword_proc.add_keyword(word[0], word[1])

@@ -1,26 +1,24 @@
-import os
 import re
-import string
-import pandas as pd
 import unicodedata
+import pandas as pd
 
 from bs4 import BeautifulSoup
 from maleo.stopword_remover.RemoverFactory import RemoverFactory
 
 
 def remove(series):
-    #series = remove_html(series)
+    # series = remove_html(series)
     series.drop_duplicates(keep='first', inplace=True)
     series = remove_link(series)
     series = remove_punctuation(series)
     series = remove_char(series)
-    
+
     # remove multiple whitespaces
     series = series.replace(regex=r'\s\s+', value=' ')
     series = series.str.strip()
     series = remove_non_ascii(series)
     series = remove_stopword(series)
-    
+
     return series
 
 
@@ -31,7 +29,8 @@ def remove_link(series):
 
 
 def remove_punctuation(series):
-    punctuation_pattern = r"[\s{}]".format(re.escape('!"#$%&\'()*+,-./:;=?@[\\]^_`{|}~'))
+    punctuation_pattern = r"[\s{}]".format(
+        re.escape('!"#$%&\'()*+,-./:;=?@[\\]^_`{|}~'))
     series = series.replace(regex=punctuation_pattern, value=' ')
     return series
 
@@ -55,7 +54,8 @@ def remove_html(series):
 def remove_non_ascii(series):
     new_series = []
     for text in series:
-        new_text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+        new_text = unicodedata.normalize('NFKD', text).encode(
+            'ascii', 'ignore').decode('utf-8', 'ignore')
         new_series.append(new_text)
     return pd.Series(new_series)
 
@@ -66,5 +66,5 @@ def remove_stopword(series):
 
     result = series.copy()
     for idx, row in series.items():
-        result.iloc[idx,:] = stopword.remove(row)
+        result.iloc[idx, :] = stopword.remove(row)
     return result

@@ -1,5 +1,4 @@
 class Remover(object):
-    """description of class"""
 
     def __init__(self, dictionary):
         self.dictionary = dictionary
@@ -10,6 +9,6 @@ class Remover(object):
     def remove(self, text):
         """Remove stop words."""
         words = text.split(' ')
-        stopped_words = [word for word in words if not self.dictionary.contains(word)]
-
+        stopped_words = [
+            word for word in words if not self.dictionary.contains(word)]
         return ' '.join(stopped_words)
