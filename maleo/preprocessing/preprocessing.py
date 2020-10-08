@@ -1,4 +1,5 @@
 import re
+import pickle
 import json
 import pandas as pd
 from number_parser import parse
@@ -70,3 +71,16 @@ def convert_slang_formal(series):
     result = result.replace(r"\s{2,}", "")
     result = result.str.strip()
     return result
+
+
+def convert_emojis_to_word(series):
+    with open('maleo/preprocessing/Emoji_Dict.p', 'rb') as fp:
+        emoji_dict = pickle.load(fp)
+    emoji_dict = {v: k for k, v in emoji_dict.items()}
+
+    for emot in emoji_dict:
+        pattern = r'(' + emot + ')'
+        val = "_".join(emoji_dict[emot].replace(
+            ",", "").replace(":", "").split())
+        series = series.replace(regex=pattern, value=val)
+    return series

@@ -1,4 +1,5 @@
 import re
+import pickle
 import unicodedata
 import pandas as pd
 
@@ -67,4 +68,13 @@ def remove_stopword(series):
     result = series.copy()
     for idx, row in series.items():
         result.iloc[idx, :] = stopword.remove(row)
+    return result
+
+
+def remove_emoticons(series):
+    with open('maleo/cleansing/Emoticon_Dict.p', 'rb') as fp:
+        emoticon_dict = pickle.load(fp)
+    emoticon_pattern = re.compile(
+        u'(' + u'|'.join(k for k in emoticon_dict) + u')')
+    result = series.replace(regex=emoticon_pattern, value=r'')
     return result
