@@ -7,8 +7,11 @@ from price_parser import Price
 from flashtext import KeywordProcessor
 
 
-def word2number(text, lang):
-    return parse(text) if lang == 'eng' else text
+def word2number(series, lang='id'):
+    if lang == 'eng':
+        return series.apply(parse)
+    else:
+        return series
 
 
 def extract_hashtag(series):
@@ -48,7 +51,7 @@ def encode_date(series):
 
 
 def encode_phone_num(series):
-    re_phone_num = r'^(^\+62\s?|^0)(\d{3,4}-?){2}\d{3,4}$'
+    re_phone_num = r'(\+62\s?|0)(\d{3,4}-?){2}\d{3,4}'
     series = series.replace(regex=re_phone_num, value='<PHONE NUM>')
     return series
 

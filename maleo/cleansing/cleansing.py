@@ -7,19 +7,8 @@ from bs4 import BeautifulSoup
 from maleo.stopword_remover.RemoverFactory import RemoverFactory
 
 
-def remove(series):
-    # series = remove_html(series)
-    series.drop_duplicates(keep='first', inplace=True)
-    series = remove_link(series)
-    series = remove_punctuation(series)
-    series = remove_char(series)
-
-    # remove multiple whitespaces
+def remove_multiple_space(series):
     series = series.replace(regex=r'\s\s+', value=' ')
-    series = series.str.strip()
-    series = remove_non_ascii(series)
-    series = remove_stopword(series)
-
     return series
 
 
@@ -40,7 +29,7 @@ def remove_char(series):
     # remove single char
     series = series.replace(regex=r'\s[^uUgGbB0-9]\s', value=' ')
     # remove consecutive repeating char
-    series = series.replace(regex=r'([^gG])\1+', value=r'\1')
+    series = series.replace(regex=r'([^gG0-9])\1+', value=r'\1')
     return series
 
 
@@ -72,8 +61,8 @@ def remove_stopword(series):
 
 
 def remove_emoticons(series):
-    with open('maleo/cleansing/Emoticon_Dict.p', 'rb') as fp:
-        emoticon_dict = pickle.load(fp)
+    with open('maleo/cleansing/Emoticon_Dict.p', 'rb') as file:
+        emoticon_dict = pickle.load(file)
     emoticon_pattern = re.compile(
         u'(' + u'|'.join(k for k in emoticon_dict) + u')')
     result = series.replace(regex=emoticon_pattern, value=r'')

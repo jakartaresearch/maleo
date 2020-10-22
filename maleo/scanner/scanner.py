@@ -1,8 +1,5 @@
 import re
-from itertools import groupby
 import emoji
-
-from nltk.tokenize import word_tokenize
 
 
 def scan(df, text_column):
