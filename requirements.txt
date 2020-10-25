@@ -1,6 +1,6 @@
-pandas
-emoji
-nltk
-number-parser
-price-parser
-flashtext
+pandas==1.1.1
+emoji==0.6.0
+nltk==3.5
+number-parser==0.2.1
+price-parser==0.3.3
+flashtext==2.7
