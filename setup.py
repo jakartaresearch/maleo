@@ -9,7 +9,7 @@ with open('requirements.txt', encoding='utf8') as requirements_txt:
 setup(
     name='maleo',
     packages=find_packages(),
-    version='0.0.1',
+    version='0.0.2',
     license='MIT',
     description='Wrapper library for data cleansing, preprocessing in text',
     long_description=long_description,
@@ -17,7 +17,7 @@ setup(
     author='Ruben Stefanus',
     author_email='researchjair@gmail.com',
     url='https://github.com/jakartaresearch/maleo',
-    download_url='https://github.com/jakartaresearch/maleo/archive/v0.0.1.tar.gz',
+    download_url='https://github.com/jakartaresearch/maleo/archive/v0.0.2.tar.gz',
     keywords=['nlp', 'text-processing', 'machine-learning'],
     install_requires=install_requirements,
     classifiers=[
