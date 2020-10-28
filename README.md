@@ -12,25 +12,20 @@ Wrapper library for text cleansing, preprocessing in NLP
 
 ## Installation
 ```
-    pip install maleo
-```
-## Requirements
-
-```
-    pip install -r requirements.txt
+pip install maleo
 ```
 
 ## Getting Started
 ```python
-    from maleo.wizard import Wizard
+from maleo.wizard import Wizard
 
-    wiz = Wizard()
+wiz = Wizard()
 
-    wiz.scanner(df, 'text')
-    wiz.emoji_to_word(df.text)
-    wiz.slang_to_formal(df.text)
-    
+wiz.scanner(df, 'text')
+wiz.emoji_to_word(df.text)
+wiz.slang_to_formal(df.text)
 ```
+
 ## Instance Attribute
 ```
 ['scanner',
