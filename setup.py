@@ -1,15 +1,9 @@
-import sys
-import os.path as path
 from setuptools import setup, find_packages
 
-here = path.abspath(path.dirname(__file__))
-
-sys.path.insert(0, path.join(here, 'maleo'))
-
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open('README.md', encoding='utf8') as f:
     long_description = f.read()
 
-with open(path.join(here, 'requirements.txt'), encoding='utf8') as requirements_txt:
+with open('requirements.txt', encoding='utf8') as requirements_txt:
     install_requirements = requirements_txt.read().split(",")
 
 setup(
