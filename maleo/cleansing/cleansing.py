@@ -2,6 +2,7 @@ import re
 import pickle
 import unicodedata
 import pandas as pd
+import pkg_resources
 
 from bs4 import BeautifulSoup
 from maleo.stopword_remover.RemoverFactory import RemoverFactory
@@ -61,7 +62,9 @@ def remove_stopword(series: pd.Series) -> pd.Series:
 
 
 def remove_emoticons(series: pd.Series) -> pd.Series:
-    with open('maleo/cleansing/Emoticon_Dict.p', 'rb') as file:
+    emoticon_dict_path = pkg_resources.resource_filename('maleo',
+                                                         'cleansing/Emoticon_Dict.p')
+    with open(emoticon_dict_path, 'rb') as file:
         emoticon_dict = pickle.load(file)
     emoticon_pattern = re.compile(
         u'(' + u'|'.join(k for k in emoticon_dict) + u')')

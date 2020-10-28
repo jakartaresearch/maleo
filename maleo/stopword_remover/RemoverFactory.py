@@ -1,5 +1,6 @@
 from maleo.stopword_remover.ArrayDictionary import ArrayDictionary
 from maleo.stopword_remover.Remover import Remover
+import pkg_resources
 
 
 class RemoverFactory(object):
@@ -13,7 +14,9 @@ class RemoverFactory(object):
         return stopWordRemover
 
     def get_stop_words(self):
-        with open('maleo/stopword_remover/indo_stopwords.txt', 'r') as file:
+        indo_stopwords_path = pkg_resources.resource_filename('maleo',
+                                                              'stopword_remover/indo_stopwords.txt')
+        with open(indo_stopwords_path, 'r') as file:
             tmp = file.readlines()
             stopword = [word.rstrip('\n') for word in tmp]
         return stopword

@@ -5,6 +5,7 @@ import pandas as pd
 from number_parser import parse
 from price_parser import Price
 from flashtext import KeywordProcessor
+import pkg_resources
 
 
 def word2number(series: pd.Series, lang='id') -> pd.Series:
@@ -63,7 +64,9 @@ def read_json(json_path: str) -> dict:
 
 
 def convert_slang_formal(series: pd.Series) -> pd.Series:
-    dict_alay = read_json('maleo/preprocessing/slang_dict.json')
+    slang_dict_path = pkg_resources.resource_filename('maleo',
+                                                      'preprocessing/slang_dict.json')
+    dict_alay = read_json(slang_dict_path)
 
     keyword_proc = KeywordProcessor()
     for word in dict_alay.items():
@@ -77,7 +80,9 @@ def convert_slang_formal(series: pd.Series) -> pd.Series:
 
 
 def convert_emojis_to_word(series: pd.Series) -> pd.Series:
-    with open('maleo/preprocessing/Emoji_Dict.p', 'rb') as fp:
+    emoji_dict_path = pkg_resources.resource_filename('maleo',
+                                                      'preprocessing/Emoji_Dict.p')
+    with open(emoji_dict_path, 'rb') as fp:
         emoji_dict = pickle.load(fp)
     emoji_dict = {v: k for k, v in emoji_dict.items()}
 
