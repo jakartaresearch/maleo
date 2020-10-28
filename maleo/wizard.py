@@ -29,7 +29,7 @@ class Wizard:
         self.slang_to_formal = convert_slang_formal
         self.emoji_to_word = convert_emojis_to_word
 
-    def convert_dtype(self, text):
+    def convert_dtype(self, text) -> pd.Series:
         if isinstance(text, list) or isinstance(text, str):
             text = pd.Series(text)
         elif not isinstance(text, pd.core.series.Series):

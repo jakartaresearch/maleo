@@ -1,5 +1,5 @@
 class ArrayDictionary(object):
-    """description of class"""
+    """description of class."""
 
     def __init__(self, words=None):
         self.words = {}
@@ -13,11 +13,11 @@ class ArrayDictionary(object):
         return len(self.words)
 
     def add_words(self, words):
-        """Add multiple words to the dictionary"""
-        self.words = dict(zip(words,words))
+        """Add multiple words to the dictionary."""
+        self.words = dict(zip(words, words))
 
     def add(self, word):
-        """Add a word to the dictionary"""
+        """Add a word to the dictionary."""
         if not word or word.strip() == '':
             return
-        self.words[word]=word
+        self.words[word] = word
