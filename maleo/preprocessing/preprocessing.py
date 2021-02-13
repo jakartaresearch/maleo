@@ -80,6 +80,7 @@ def convert_slang_formal(series: pd.Series) -> pd.Series:
 
 
 def convert_emojis_to_word(series: pd.Series) -> pd.Series:
+    whitespace = " "
     emoji_dict_path = pkg_resources.resource_filename('maleo',
                                                       'preprocessing/Emoji_Dict.p')
     with open(emoji_dict_path, 'rb') as fp:
@@ -89,6 +90,6 @@ def convert_emojis_to_word(series: pd.Series) -> pd.Series:
     for emot in emoji_dict:
         pattern = r'(' + emot + ')'
         val = "_".join(emoji_dict[emot].replace(
-            ",", "").replace(":", "").split())
+            ",", "").replace(":", "").split()) + whitespace
         series = series.replace(regex=pattern, value=val)
     return series
