@@ -93,3 +93,17 @@ def convert_emojis_to_word(series: pd.Series) -> pd.Series:
             ",", "").replace(":", "").split()) + whitespace
         series = series.replace(regex=pattern, value=val)
     return series
+
+
+def convert_emojis_to_tag(series: pd.Series) -> pd.Series:
+    emoji_dict_path = pkg_resources.resource_filename('maleo',
+                                                      'preprocessing/Emoji_Dict.p')
+    with open(emoji_dict_path, 'rb') as fp:
+        emoji_dict = pickle.load(fp)
+    emoji_dict = {v: k for k, v in emoji_dict.items()}
+
+    for emot in emoji_dict:
+        pattern = r'(' + emot + ')'
+        val = "<EMOJI> "
+        series = series.replace(regex=pattern, value=val)
+    return series
