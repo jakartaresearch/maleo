@@ -1,5 +1,3 @@
-import pandas as pd
-
 from maleo.scanner.scanner import scan
 from maleo.cleansing.cleansing import remove_link, remove_punctuation, remove_char, remove_html
 from maleo.cleansing.cleansing import remove_non_ascii, remove_stopword, remove_emoticons
@@ -30,9 +28,4 @@ class Wizard:
         self.emoji_to_word = convert_emojis_to_word
         self.emoji_to_tag = convert_emojis_to_tag
 
-    def convert_dtype(self, text) -> pd.Series:
-        if isinstance(text, list) or isinstance(text, str):
-            text = pd.Series(text)
-        elif not isinstance(text, pd.core.series.Series):
-            print('Data Type not supported')
-        return text
+
