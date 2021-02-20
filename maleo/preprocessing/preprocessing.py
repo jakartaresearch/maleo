@@ -108,3 +108,8 @@ def convert_emojis_to_tag(series: pd.Series) -> pd.Series:
         val = "<EMOJI> "
         series = series.replace(regex=pattern, value=val)
     return series
+
+
+def custom_regex(series: pd.Series, pattern: str, val: str) -> pd.Series:
+    series = series.replace(regex=pattern, value=val)
+    return series
