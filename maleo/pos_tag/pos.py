@@ -15,12 +15,8 @@ def check_model(model_filename):
 
 
 def load_model():
-    model_filename = 'pos_model.pt'
-    check_model(model_filename)
     model_path = pkg_resources.resource_filename('maleo','pos_tag/pos_model.pt')
-    
-    if not path.exists(model_path):
-        model_path = model_filename
+    check_model(model_filename)
     model = SequenceTagger.load(model_path)
     return model
 
