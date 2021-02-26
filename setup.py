@@ -2,30 +2,26 @@ from setuptools import setup, find_packages
 
 with open('README.md', encoding='utf8') as f:
     long_description = f.read()
-
+    
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+    
 setup(
     name='maleo',
     packages=find_packages(),
     package_data={'maleo': ['cleansing/Emoticon_Dict.p', 'preprocessing/Emoji_Dict.p',
                             'preprocessing/slang_dict.json', 'stopword_remover/indo_stopwords.txt']},
-    version='0.0.5',
+    version='0.0.6',
     license='MIT',
-    description='Wrapper library for data cleansing, preprocessing in text',
+    description='Wrapper library for text cleansing, preprocessing in NLP',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Ruben Stefanus',
     author_email='researchjair@gmail.com',
     url='https://github.com/jakartaresearch/maleo',
-    download_url='https://github.com/jakartaresearch/maleo/archive/v0.0.5.tar.gz',
+    download_url='https://github.com/jakartaresearch/maleo/archive/v0.0.6.tar.gz',
     keywords=['nlp', 'text-processing', 'machine-learning'],
-    install_requires=[
-        'pandas>=1.1.1',
-        'emoji>=0.6.0',
-        'nltk>=3.5',
-        'number-parser>=0.2.1',
-        'price-parser>=0.3.3',
-        'flashtext>=2.7'
-    ],
+    install_requires=required,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',

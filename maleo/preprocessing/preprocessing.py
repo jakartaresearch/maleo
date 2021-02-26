@@ -79,17 +79,37 @@ def convert_slang_formal(series: pd.Series) -> pd.Series:
     return result
 
 
-def convert_emojis_to_word(series: pd.Series) -> pd.Series:
-    whitespace = " "
+def load_emojis():
     emoji_dict_path = pkg_resources.resource_filename('maleo',
                                                       'preprocessing/Emoji_Dict.p')
     with open(emoji_dict_path, 'rb') as fp:
         emoji_dict = pickle.load(fp)
     emoji_dict = {v: k for k, v in emoji_dict.items()}
+    return emoji_dict
 
+
+def convert_emojis_to_word(series: pd.Series) -> pd.Series:
+    whitespace = " "
+    emoji_dict = load_emojis()
+    
     for emot in emoji_dict:
         pattern = r'(' + emot + ')'
         val = "_".join(emoji_dict[emot].replace(
             ",", "").replace(":", "").split()) + whitespace
         series = series.replace(regex=pattern, value=val)
+    return series
+
+
+def convert_emojis_to_tag(series: pd.Series) -> pd.Series:
+    emoji_dict = load_emojis()
+
+    for emot in emoji_dict:
+        pattern = r'(' + emot + ')'
+        val = "<EMOJI> "
+        series = series.replace(regex=pattern, value=val)
+    return series
+
+
+def custom_regex(series: pd.Series, pattern: str, val: str) -> pd.Series:
+    series = series.replace(regex=pattern, value=val)
     return series

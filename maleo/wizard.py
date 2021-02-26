@@ -1,12 +1,11 @@
-import pandas as pd
-
 from maleo.scanner.scanner import scan
 from maleo.cleansing.cleansing import remove_link, remove_punctuation, remove_char, remove_html
 from maleo.cleansing.cleansing import remove_non_ascii, remove_stopword, remove_emoticons
 from maleo.cleansing.cleansing import remove_multiple_space
 from maleo.preprocessing.preprocessing import encode_email, encode_date, encode_phone_num
-from maleo.preprocessing.preprocessing import convert_slang_formal, word2number, convert_emojis_to_word
-from maleo.preprocessing.preprocessing import extract_price, extract_hashtag
+from maleo.preprocessing.preprocessing import convert_slang_formal, word2number, convert_emojis_to_word, convert_emojis_to_tag
+from maleo.preprocessing.preprocessing import extract_price, extract_hashtag, custom_regex
+from maleo.pos_tag.pos import load_model, pos_inference
 
 
 class Wizard:
@@ -28,10 +27,13 @@ class Wizard:
         self.phone_num_to_tag = encode_phone_num
         self.slang_to_formal = convert_slang_formal
         self.emoji_to_word = convert_emojis_to_word
-
-    def convert_dtype(self, text) -> pd.Series:
-        if isinstance(text, list) or isinstance(text, str):
-            text = pd.Series(text)
-        elif not isinstance(text, pd.core.series.Series):
-            print('Data Type not supported')
-        return text
+        self.emoji_to_tag = convert_emojis_to_tag
+        self.custom_regex = custom_regex
+    
+    
+    def load_pos(self):
+        self.pos_model = load_model()
+    
+    def predict_pos(self, text:str, output_pair=False):
+        out = pos_inference(self.pos_model, text, output_pair)
+        return out
