@@ -5,6 +5,7 @@ from maleo.cleansing.cleansing import remove_multiple_space
 from maleo.preprocessing.preprocessing import encode_email, encode_date, encode_phone_num
 from maleo.preprocessing.preprocessing import convert_slang_formal, word2number, convert_emojis_to_word, convert_emojis_to_tag
 from maleo.preprocessing.preprocessing import extract_price, extract_hashtag, custom_regex
+from maleo.pos_tag.pos import load_model, pos_inference
 
 
 class Wizard:
@@ -28,5 +29,11 @@ class Wizard:
         self.emoji_to_word = convert_emojis_to_word
         self.emoji_to_tag = convert_emojis_to_tag
         self.custom_regex = custom_regex
-
-
+    
+    
+    def load_pos(self):
+        self.pos_model = load_model()
+    
+    def predict_pos(self, text:str, output_pair=False):
+        out = pos_inference(self.pos_model, text, output_pair)
+        return out
