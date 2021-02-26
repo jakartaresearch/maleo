@@ -16,7 +16,7 @@ def check_model(model_filename):
 
 def load_model():
     model_path = pkg_resources.resource_filename('maleo','pos_tag/pos_model.pt')
-    check_model(model_filename)
+    check_model(model_path)
     model = SequenceTagger.load(model_path)
     return model
 
