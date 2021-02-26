@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     package_data={'maleo': ['cleansing/Emoticon_Dict.p', 'preprocessing/Emoji_Dict.p',
                             'preprocessing/slang_dict.json', 'stopword_remover/indo_stopwords.txt']},
-    version='0.0.6',
+    version='0.0.6.1',
     license='MIT',
     description='Wrapper library for text cleansing, preprocessing in NLP',
     long_description=long_description,
@@ -19,7 +19,7 @@ setup(
     author='Ruben Stefanus',
     author_email='researchjair@gmail.com',
     url='https://github.com/jakartaresearch/maleo',
-    download_url='https://github.com/jakartaresearch/maleo/archive/v0.0.6.tar.gz',
+    download_url='https://github.com/jakartaresearch/maleo/archive/v0.0.6.1.tar.gz',
     keywords=['nlp', 'text-processing', 'machine-learning'],
     install_requires=required,
     classifiers=[
