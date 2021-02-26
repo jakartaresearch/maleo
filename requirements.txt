@@ -6,3 +6,4 @@ price-parser>=0.3.3
 flashtext>=2.7
 gdown>=3.12.2
 flair>=0.7
+beautifulsoup4>=4.9.1
