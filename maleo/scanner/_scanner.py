@@ -3,7 +3,9 @@ import emoji
 import pandas as pd
 
 
-def scan(df: pd.DataFrame, text_column: str) -> pd.DataFrame:
+__all__ = ["scanner"]
+
+def scanner(df: pd.DataFrame, text_column: str) -> pd.DataFrame:
     df['chars_count'] = df[text_column].apply(len)
     df['words_count'] = df[text_column].apply(count_words)
     df['emojis_count'] = df[text_column].apply(count_emojis)

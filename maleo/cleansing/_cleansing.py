@@ -8,25 +8,65 @@ from bs4 import BeautifulSoup
 from maleo.stopword_remover.RemoverFactory import RemoverFactory
 
 
-def remove_multiple_space(series: pd.Series) -> pd.Series:
-    series = series.replace(regex=r'\s\s+', value=' ')
-    return series
+__all__ = ["rm_multiple_space", "rm_link", "rm_punc", "rm_char",
+           "rm_html", "rm_non_ascii", "rm_stopword", "rm_emoticon"]
 
 
-def remove_link(series: pd.Series) -> pd.Series:
-    series = series.replace(regex=r'http\S+', value='')
-    series = series.replace(regex=r'pic.twitter.com\S+', value='')
-    return series
+def rm_multiple_space(text: pd.Series) -> pd.Series:
+    """
+    Remove multiple space between word in text.
+    
+    Parameters
+    ----------
+    text : pd.Series
+        Series of text data.
+    Returns
+    -------
+    clean_text : pd.Series
+        Text with only single space between word.
+    """
+    clean_text = text.replace(regex=r'\s\s+', value=' ')
+    return clean_text
 
 
-def remove_punctuation(series: pd.Series) -> pd.Series:
+def rm_link(text: pd.Series) -> pd.Series:
+    """
+    Remove hyperlink from text.
+    
+    Parameters
+    ----------
+    text : pd.Series
+        Series of text data.
+    Returns
+    -------
+    clean_text : pd.Series
+        Text without general and twitter hyperlink.
+    """
+    clean_text = text.replace(regex=r'http\S+', value='')
+    clean_text = clean_text.replace(regex=r'pic.twitter.com\S+', value='')
+    return clean_text
+
+
+def rm_punc(text: pd.Series) -> pd.Series:
+    """
+    Remove punctuations from text.
+    
+    Parameters
+    ----------
+    text : pd.Series
+        Series of text data.
+    Returns
+    -------
+    clean_text : pd.Series
+        Text without punctuations.
+    """
     punctuation_pattern = r"[\s{}]".format(
         re.escape('!"#$%&\'()*+,-./:;=?@[\\]^_`{|}~'))
-    series = series.replace(regex=punctuation_pattern, value=' ')
-    return series
+    clean_text = text.replace(regex=punctuation_pattern, value=' ')
+    return clean_text
 
 
-def remove_char(series: pd.Series) -> pd.Series:
+def rm_char(series: pd.Series) -> pd.Series:
     # remove single char
     series = series.replace(regex=r'\s[^uUgGbB0-9]\s', value=' ')
     # remove consecutive repeating char
@@ -34,7 +74,7 @@ def remove_char(series: pd.Series) -> pd.Series:
     return series
 
 
-def remove_html(series: pd.Series) -> pd.Series:
+def rm_html(series: pd.Series) -> pd.Series:
     new_series = []
     for text in series:
         new_text = BeautifulSoup(text, "html.parser")
@@ -42,7 +82,7 @@ def remove_html(series: pd.Series) -> pd.Series:
     return pd.Series(new_series)
 
 
-def remove_non_ascii(series: pd.Series) -> pd.Series:
+def rm_non_ascii(series: pd.Series) -> pd.Series:
     new_series = []
     for text in series:
         new_text = unicodedata.normalize('NFKD', text).encode(
@@ -51,7 +91,7 @@ def remove_non_ascii(series: pd.Series) -> pd.Series:
     return pd.Series(new_series)
 
 
-def remove_stopword(series: pd.Series) -> pd.Series:
+def rm_stopword(series: pd.Series) -> pd.Series:
     factory = RemoverFactory()
     stopword = factory.create_stop_word_remover()
 
@@ -61,7 +101,7 @@ def remove_stopword(series: pd.Series) -> pd.Series:
     return result
 
 
-def remove_emoticons(series: pd.Series) -> pd.Series:
+def rm_emoticon(series: pd.Series) -> pd.Series:
     emoticon_dict_path = pkg_resources.resource_filename('maleo',
                                                          'cleansing/Emoticon_Dict.p')
     with open(emoticon_dict_path, 'rb') as file:

@@ -8,14 +8,18 @@ from flashtext import KeywordProcessor
 import pkg_resources
 
 
-def word2number(series: pd.Series, lang='id') -> pd.Series:
+__all__ = ["word_to_number", "get_hashtag", "get_price", "email_to_tag", "date_to_tag", 
+           "phone_to_tag", "slang_to_formal", "emoji_to_word", "emoji_to_tag", "custom_regex"]
+
+
+def word_to_number(series: pd.Series, lang='id') -> pd.Series:
     if lang == 'eng':
         return series.apply(parse)
     else:
         return series
 
 
-def extract_hashtag(series: pd.Series) -> pd.DataFrame:
+def get_hashtag(series: pd.Series) -> pd.DataFrame:
     list_text, list_hashtag = [], []
     for _, value in series.items():
         get_hashtag = list(
@@ -27,7 +31,7 @@ def extract_hashtag(series: pd.Series) -> pd.DataFrame:
     return pd.DataFrame({'Text': list_text, 'Hashtag': list_hashtag})
 
 
-def extract_price(series: pd.Series) -> pd.DataFrame:
+def get_price(series: pd.Series) -> pd.DataFrame:
     list_text, list_price = [], []
     for _, value in series.items():
         price = Price.fromstring(value)
@@ -38,12 +42,12 @@ def extract_price(series: pd.Series) -> pd.DataFrame:
     return pd.DataFrame({'Text': list_text, 'Price': list_price})
 
 
-def encode_email(series: pd.Series) -> pd.Series:
+def email_to_tag(series: pd.Series) -> pd.Series:
     series = series.replace(regex=r'[\w\.-]+@[\w\.-]+\.\w+', value='<EMAIL>')
     return series
 
 
-def encode_date(series: pd.Series) -> pd.Series:
+def date_to_tag(series: pd.Series) -> pd.Series:
     ddmmyyyy = r'\b(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/([0-9]{4})\b'
     yyyymmdd = r'\b([0-9]{4})/(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])\b'
     date = re.compile('|'.join([ddmmyyyy, yyyymmdd]))
@@ -51,7 +55,7 @@ def encode_date(series: pd.Series) -> pd.Series:
     return series
 
 
-def encode_phone_num(series: pd.Series) -> pd.Series:
+def phone_to_tag(series: pd.Series) -> pd.Series:
     re_phone_num = r'(\+62\s?|0)(\d{3,4}-?){2}\d{3,4}'
     series = series.replace(regex=re_phone_num, value='<PHONE NUM>')
     return series
@@ -63,7 +67,7 @@ def read_json(json_path: str) -> dict:
     return data_dict
 
 
-def convert_slang_formal(series: pd.Series) -> pd.Series:
+def slang_to_formal(series: pd.Series) -> pd.Series:
     slang_dict_path = pkg_resources.resource_filename('maleo',
                                                       'preprocessing/slang_dict.json')
     dict_alay = read_json(slang_dict_path)
@@ -88,7 +92,7 @@ def load_emojis():
     return emoji_dict
 
 
-def convert_emojis_to_word(series: pd.Series) -> pd.Series:
+def emoji_to_word(series: pd.Series) -> pd.Series:
     whitespace = " "
     emoji_dict = load_emojis()
     
@@ -100,7 +104,7 @@ def convert_emojis_to_word(series: pd.Series) -> pd.Series:
     return series
 
 
-def convert_emojis_to_tag(series: pd.Series) -> pd.Series:
+def emoji_to_tag(series: pd.Series) -> pd.Series:
     emoji_dict = load_emojis()
 
     for emot in emoji_dict:
