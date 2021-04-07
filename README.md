@@ -1,5 +1,10 @@
+<img src="logo.png" alt="Maleo" width="150" height="150">
+
 # Maleo
 Wrapper library for text cleansing, preprocessing and POS Tagging in NLP
+
+## Docs
+https://jakartaresearch.github.io/maleo.github.io
 
 ## Overview of features
     - Scanner : get insight about your text dataset (ex: number of chars, words, emojis, etc)
