@@ -3,7 +3,22 @@ import emoji
 import pandas as pd
 
 
-def scan(df: pd.DataFrame, text_column: str) -> pd.DataFrame:
+__all__ = ["scanner"]
+
+def scanner(df: pd.DataFrame, text_column: str) -> pd.DataFrame:
+    """Scan text dataset, which is do count char, word, emoji, number, punctuation and date in each text.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        DataFrame of text data
+    text_column : str
+        Choose specific column name in DataFrame
+    Returns
+    -------
+    df : pd.DataFrame
+        Summary of text dataset
+    """
     df['chars_count'] = df[text_column].apply(len)
     df['words_count'] = df[text_column].apply(count_words)
     df['emojis_count'] = df[text_column].apply(count_emojis)
