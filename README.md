@@ -4,7 +4,7 @@
 Wrapper library for text cleansing, preprocessing and POS Tagging in NLP
 
 ## Docs
-https://jakartaresearch.github.io/maleo.github.io
+https://jakartaresearch.github.io/maleo/
 
 ## Overview of features
     - Scanner : get insight about your text dataset (ex: number of chars, words, emojis, etc)
